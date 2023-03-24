@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  #email notification settings
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${NF_USERNAME}
+    password: ${NF_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 15000
+          timeout: 15000
+          writetimeout: 15000
+          starttls:
+            enable: true
+          debug: true
+  freemarker:
+    request-context-attribute: request
+    cache: false
+    template-loader-path: classpath:/templates/email/
