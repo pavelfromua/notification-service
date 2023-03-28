@@ -1,7 +1,13 @@
 server:
-  port: 8080
-
+  port: 9000
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost/notifier
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
   #email notification settings
   mail:
     host: smtp.gmail.com
@@ -22,3 +28,23 @@ spring:
     request-context-attribute: request
     cache: false
     template-loader-path: classpath:/templates/email/
+  session:
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+      schema: classpath:session_tables.sql
+  main:
+    allow-bean-definition-overriding: true
+
+security:
+  oauth2:
+    client:
+      clientId: ${CLIENT_ID}
+      clientSecret: ${CLIENT_SECRET}
+      accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+      clientAuthenticationScheme: form
+      scope: openid,email,profile
+    resource:
+      userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+      preferTokenInfo: true
