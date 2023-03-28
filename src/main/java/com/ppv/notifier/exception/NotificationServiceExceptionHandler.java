@@ -33,10 +33,7 @@ public class NotificationServiceExceptionHandler extends ResponseEntityException
 				.status(e.getHttpStatus().value())
 				.build();
 
-		log.atError()
-				.addKeyValue("httpStatus", e.getHttpStatus().value())
-				.setCause(e)
-				.log("Handling NotificationException: {}, {}", e.getMessage(), e.getDetail());
+		log.error("Handling NotificationException: {}, {}", e.getMessage(), e.getDetail());
 
 		return ResponseEntity.status(response.getStatus()).body(response);
 	}
@@ -54,9 +51,7 @@ public class NotificationServiceExceptionHandler extends ResponseEntityException
 				.status(HttpStatus.INTERNAL_SERVER_ERROR.value())
 				.build();
 
-		log.atError()
-				.setCause(e)
-				.log("Handling Exception");
+		log.error("Handling Exception: {}", e);
 
 		return ResponseEntity.status(response.getStatus()).body(response);
 	}

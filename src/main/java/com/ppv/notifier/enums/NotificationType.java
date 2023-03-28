@@ -11,8 +11,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum NotificationType {
-    CONFIRM("confirm_notification"),
-    CANCEL("cancel_notification");
+    CONFIRM("confirm_notification", "Confirm visit"),
+    CANCEL("cancel_notification", "Cancel visit");
 
     private final String templateName;
+    private final String name;
 }

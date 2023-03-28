@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification service</title>
+</head>
+<body>
+<center><h3>Welcome to the Notification service</h3></center>
+<div align="center">
+    <div th:if="${profile}">
+        <p th:text="${profile.name}"></p>
+        <a th:href="@{'/logout'}">Logout</a>
+    </div>
+    <div th:unless="${profile}"><a th:href="@{'/login'}">Login</a></div>
+</div>
+
+</body>
+</html>

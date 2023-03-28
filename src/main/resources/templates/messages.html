@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+</head>
+<body>
+<div th:insert="~{index}"/>
+
+<form th:method="POST" th:action="@{/messages}" th:object="${notification}">
+    <table align="center">
+        <tr>
+            <td>
+                <select name="messageType" th:field="*{messageType}">
+                    <option th:each="messageTypeItem : ${T(com.ppv.notifier.enums.MessageType).values()}"
+                            th:value="${messageTypeItem}" th:text="${messageTypeItem.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="notificationType">Select action: </label>
+                <select name="notificationType" th:field="*{notificationType}" id="notificationType">
+                    <option th:each="notificationTypeItem : ${T(com.ppv.notifier.enums.NotificationType).values()}"
+                            th:value="${notificationTypeItem}" th:text="${notificationTypeItem.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="name">Enter name: </label>
+                <input type="text" id="name" th:field="*{name}"  />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="contact">Enter contact: </label>
+                <input type="text" id="contact" th:field="*{contact}"  />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="subject">Enter subject: </label>
+                <input type="text" id="subject" th:field="*{subject}"  />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Send</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<h3>Messages:</h3>
+<table align="center" border="1">
+    <tr th:each="message, custStat: ${messages}">
+        <th scope="row" th:text="${custStat.count}">1</th>
+        <td th:text="${message.recipientName}" />
+        <td th:text="${message.recipientContact}" />
+        <td th:text="${message.subject}" />
+        <td th:text="${message.sentBy}" />
+    </tr>
+</table>
+</body>
+</html>
