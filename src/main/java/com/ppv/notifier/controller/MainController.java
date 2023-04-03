@@ -2,8 +2,8 @@ package com.ppv.notifier.controller;
 
 import com.ppv.notifier.entity.User;
 import com.ppv.notifier.model.NotificationModel;
+import com.ppv.notifier.service.MessageDispatcher;
 import com.ppv.notifier.service.MessageService;
-import com.ppv.notifier.service.NotificationService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class MainController {
 	private final MessageService messageService;
-	private final NotificationService notificationService;
+	private final MessageDispatcher messageDispatcher;
 
-	public MainController(MessageService messageService, NotificationService notificationService) {
+	public MainController(MessageService messageService, MessageDispatcher messageDispatcher) {
 		this.messageService = messageService;
-		this.notificationService = notificationService;
+		this.messageDispatcher = messageDispatcher;
 	}
 
 	@GetMapping
@@ -51,8 +51,8 @@ public class MainController {
 
 	@PostMapping("/messages")
 	public String sendMessage(@ModelAttribute NotificationModel notification, @AuthenticationPrincipal User user) {
+		messageDispatcher.process(notification);
 		messageService.save(notification, user);
-		notificationService.send(notification);
 
 		return "redirect:messages";
 	}

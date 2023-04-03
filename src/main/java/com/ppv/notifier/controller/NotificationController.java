@@ -1,7 +1,7 @@
 package com.ppv.notifier.controller;
 
 import com.ppv.notifier.model.NotificationModel;
-import com.ppv.notifier.service.NotificationService;
+import com.ppv.notifier.service.MessageDispatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/notification")
 public class NotificationController {
-	private final NotificationService notificationService;
+	private final MessageDispatcher messageDispatcher;
 
-	public NotificationController(NotificationService notificationService) {
-		this.notificationService = notificationService;
+	public NotificationController(MessageDispatcher messageDispatcher) {
+		this.messageDispatcher = messageDispatcher;
 	}
 
-	@PostMapping("/email")
-	public ResponseEntity<String> emailSend(@RequestBody NotificationModel notificationModel) {
-		notificationService.send(notificationModel);
+	@PostMapping
+	public ResponseEntity<String> sendMessage(@RequestBody NotificationModel notificationModel) {
+        messageDispatcher.process(notificationModel);
 
 		return ResponseEntity.ok().build();
 	}

@@ -1,6 +1,7 @@
 package com.ppv.notifier.service;
 
 import com.ppv.notifier.enums.ErrorCode;
+import com.ppv.notifier.enums.MessageType;
 import com.ppv.notifier.exception.NotificationException;
 import com.ppv.notifier.model.NotificationModel;
 import freemarker.template.Configuration;
@@ -16,8 +17,9 @@ import java.io.IOException;
 
 /**
  * Java Spring Mailer
+ *
+ * @author Pavlo.Pavlichenko
  */
-
 @Service
 public class BasicMailSender implements NotificationService {
     private static final String TEMPLATE_EXT = ".html";
@@ -39,9 +41,15 @@ public class BasicMailSender implements NotificationService {
             mimeMessageHelper.setText(geContentFromTemplate(notificationModel), true);
 
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
+
         } catch (Exception e) {
             throw new NotificationException(ErrorCode.SEND_EMAIL_ERROR, e.getMessage(), e.getCause());
         }
+    }
+
+    @Override
+    public MessageType getType() {
+        return MessageType.EMAIL;
     }
 
     private String geContentFromTemplate(NotificationModel model) throws IOException, TemplateException {
