@@ -7,3 +7,5 @@
 - AOP (logger sample for checking methods performance)
 - email
     - sending using Java Spring Mailer
+- sms
+    - sending using Twilio API

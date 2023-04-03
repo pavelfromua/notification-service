@@ -1,5 +1,6 @@
 package com.ppv.notifier.service;
 
+import com.ppv.notifier.enums.MessageType;
 import com.ppv.notifier.model.NotificationModel;
 
 /**
@@ -11,4 +12,5 @@ public interface NotificationService {
 
 	void send(NotificationModel notificationModel);
 
+	MessageType getType();
 }
