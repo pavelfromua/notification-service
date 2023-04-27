@@ -26,7 +26,7 @@ public class NotificationServiceExceptionHandler extends ResponseEntityException
 	 * @return ResponseEntity with error code
 	 */
 	@ExceptionHandler(NotificationException.class)
-	public ResponseEntity<ErrorResponse> handleMigrationServiceException(final NotificationException e) {
+	public ResponseEntity<ErrorResponse> handleNotificationException(final NotificationException e) {
 		ErrorResponse response = ErrorResponse.builder()
 				.title(e.getMessage())
 				.detail(e.getDetail())
@@ -34,6 +34,25 @@ public class NotificationServiceExceptionHandler extends ResponseEntityException
 				.build();
 
 		log.error("Handling NotificationException: {}, {}", e.getMessage(), e.getDetail());
+
+		return ResponseEntity.status(response.getStatus()).body(response);
+	}
+
+	/**
+	 * Handler for DispatcherException
+	 *
+	 * @param e DispatcherException
+	 * @return ResponseEntity with error code
+	 */
+	@ExceptionHandler(DispatcherException.class)
+	public ResponseEntity<ErrorResponse> handleDispatcherException(final DispatcherException e) {
+		ErrorResponse response = ErrorResponse.builder()
+				.title(e.getMessage())
+				.detail(e.getDetail())
+				.status(e.getHttpStatus().value())
+				.build();
+
+		log.error("Handling DispatcherException: {}, {}", e.getMessage(), e.getDetail());
 
 		return ResponseEntity.status(response.getStatus()).body(response);
 	}

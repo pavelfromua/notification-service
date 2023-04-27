@@ -2,7 +2,7 @@ server:
   port: 9000
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/notifier
+    url: jdbc:postgresql://db:5432/notifier
     username: admin
     password: admin
   jpa:

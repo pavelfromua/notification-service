@@ -3,6 +3,7 @@ package com.ppv.notifier.util;
 import com.ppv.notifier.entity.LogInfo;
 import com.ppv.notifier.enums.LogType;
 import com.ppv.notifier.repository.LogRepo;
+import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -33,21 +34,18 @@ public class PerformanceChecker {
     public void checkPerformance() {
     }
 
+    @SneakyThrows
     @Around(value = "checkPerformance()")
     public void check(ProceedingJoinPoint joinPoint) {
-        try {
-            LocalDateTime startTime = LocalDateTime.now();
+        LocalDateTime startTime = LocalDateTime.now();
 
-            joinPoint.proceed();
+        joinPoint.proceed();
 
-            logRepo.save(LogInfo.builder()
-                    .type(LogType.PERFORMANCE)
-                    .message(String.format(MSG_TEMPLATE,
-                            ChronoUnit.SECONDS.between(startTime, LocalDateTime.now())))
-                    .build());
-        } catch (Throwable throwable) {
-            //do nothing
-        }
+        logRepo.save(LogInfo.builder()
+                .type(LogType.PERFORMANCE)
+                .message(String.format(MSG_TEMPLATE,
+                        ChronoUnit.SECONDS.between(startTime, LocalDateTime.now())))
+                .build());
     }
 
 }
