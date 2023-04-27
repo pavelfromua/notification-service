@@ -24,7 +24,7 @@ public class NotificationController {
 
 	@PostMapping
 	public ResponseEntity<String> sendMessage(@RequestBody NotificationModel notificationModel) {
-        messageDispatcher.process(notificationModel);
+        messageDispatcher.process(notificationModel, null);
 
 		return ResponseEntity.ok().build();
 	}

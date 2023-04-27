@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_DB: notifier
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+  notifier:
+    build: .
+    container_name: notifier
+    depends_on:
+      - db
+    ports:
+      - 9000:9000
+    environment:
+      CLIENT_ID: xxx
+      CLIENT_SECRET: xxx
+      NF_USERNAME: xxx
+      NF_PASSWORD: xxx
+      TWILIO_ACCOUNT_SID: xxx
+      TWILIO_AUTH_TOKEN: xxx
+      TWILIO_PHONE_NUMBER: xxx

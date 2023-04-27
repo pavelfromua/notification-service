@@ -26,7 +26,7 @@ public class TwilioSmsSender implements NotificationService {
     private String phoneNumber;
 
     @Override
-    public void send(NotificationModel notificationModel) {
+    public void send(NotificationModel notificationModel) throws NotificationException {
         try {
             Twilio.init(accountSid, authToken);
             Message.creator(
@@ -37,6 +37,7 @@ public class TwilioSmsSender implements NotificationService {
         } catch (Exception e) {
             throw new NotificationException(ErrorCode.SEND_SMS_ERROR, e.getMessage(), e.getCause());
         }
+
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.ppv.notifier.model.NotificationModel;
 import com.ppv.notifier.service.BasicMailSender;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

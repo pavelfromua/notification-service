@@ -29,14 +29,14 @@ public class MainController {
 	}
 
 	@GetMapping
-	public String main(Model model, @AuthenticationPrincipal User user) {
+	public String index(Model model, @AuthenticationPrincipal User user) {
 		model.addAttribute("profile", user);
 
 		if (user == null) {
 			return "index";
 		}
-		
-		return "redirect:messages";
+
+		return "redirect:/messages";
 	}
 
 	@GetMapping("/messages")
@@ -50,10 +50,10 @@ public class MainController {
 	}
 
 	@PostMapping("/messages")
-	public String sendMessage(@ModelAttribute NotificationModel notification, @AuthenticationPrincipal User user) {
-		messageDispatcher.process(notification);
-		messageService.save(notification, user);
+	public String sendMessage(@ModelAttribute NotificationModel notification,
+							  @AuthenticationPrincipal User user) {
+		messageDispatcher.process(notification, user);
 
-		return "redirect:messages";
+		return "redirect:/messages";
 	}
 }

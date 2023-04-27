@@ -32,7 +32,8 @@ public class BasicMailSender implements NotificationService {
     Configuration fmConfiguration;
 
     @Override
-    public void send(NotificationModel notificationModel) {
+    public void send(NotificationModel notificationModel) throws NotificationException {
+
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
 
@@ -41,10 +42,10 @@ public class BasicMailSender implements NotificationService {
             mimeMessageHelper.setText(geContentFromTemplate(notificationModel), true);
 
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
-
         } catch (Exception e) {
             throw new NotificationException(ErrorCode.SEND_EMAIL_ERROR, e.getMessage(), e.getCause());
         }
+
     }
 
     @Override
